@@ -4,7 +4,7 @@
 // Version: v1.x
 //========================================================================
 @Library('devops-jenkins-ci@main') _
-nodeBackEndPipeline script: this
+nodePipeline script: this
 //========================================================================
 // DO NOT MODIFY AFTER THESE LINES.
 //========================================================================

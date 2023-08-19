@@ -1,15 +1,28 @@
 pipeline {
-    agent none
-    stages('Build backend') {
-        build() {
-            node {
-    checkout scm
-    def testImage = docker.build("test-image", "./src/backend")
+    agent any
+    stages {
+        stage('Build backend') {
+            steps {
+                echo 'Build backend image'
+            }
+        }
 
-    testImage.inside {
-        sh 'make test'
-    }
-}
+        stage('Build frontend') {
+            steps {
+                echo 'Build front image'
+            }
+        }
+
+        stage('Push backend') {
+            steps {
+                echo 'Push backend image to ECR'
+            }
+        }
+
+        stage('Push frontend') {
+            steps {
+                echo 'Push frontend image to ECR'
+            }
         }
     }
 }

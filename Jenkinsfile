@@ -1,27 +1,33 @@
 pipeline {
-    agent any
+    agent none
+    environment {
+        REGION="us-east-1"
+        FRONTEND_REPO="application-frontend"
+        BACKEND_REPO="application-backend"
+        REPO_URI="495016266100.dkr.ecr.us-east-1.amazonaws.com"
+        IMAGE_TAG="${BUILD_NUMBER}"
+    }
     stages {
-        stage('Build backend') {
+        stage('Docker Build Frontend') {
+            agent any
             steps {
-                echo 'Build backend image'
+                withAWS(region:'us-east-1',credentials:'aws-credential') {
+                    sh "aws ecr get-login-password --region ${REGION} | docker login --username AWS --password-stdin ${REPO_URI}"
+                    sh "docker build -t ${FRONTEND_REPO} frontend/"
+                    sh "docker tag ${FRONTEND_REPO}:latest ${REPO_URI}/${FRONTEND_REPO}:${IMAGE_TAG}"
+                    sh "docker push ${REPO_URI}/${FRONTEND_REPO}:${IMAGE_TAG}"
+                }
             }
         }
-
-        stage('Build frontend') {
+        stage('Docker Build Backend') {
+            agent any
             steps {
-                echo 'Build front image'
-            }
-        }
-
-        stage('Push backend') {
-            steps {
-                echo 'Push backend image to ECR'
-            }
-        }
-
-        stage('Push frontend') {
-            steps {
-                echo 'Push frontend image to ECR'
+                withAWS(region:'us-east-1',credentials:'aws-credential') {
+                    sh "aws ecr get-login-password --region ${REGION} | docker login --username AWS --password-stdin ${REPO_URI}"
+                    sh "docker build -t ${BACKEND_REPO} backend/"
+                    sh "docker tag ${BACKEND_REPO}:latest ${REPO_URI}/${BACKEND_REPO}:${IMAGE_TAG}"
+                    sh "docker push ${REPO_URI}/${BACKEND_REPO}:${IMAGE_TAG}"
+                }
             }
         }
     }

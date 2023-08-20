@@ -1,14 +1,21 @@
 # sd2660_msa
 MSA application for assignment
 
-Jenkins plugins
-Docker Pipeline
-Pipeline Utility Steps
-Kubernetes
-Amazon EC2 plugin
-Pipeline: AWS Steps
+Jenkins 
+Install plugins
+- Docker Pipeline
+- Pipeline Utility Steps
+- Kubernetes
+- Amazon EC2 plugin
+- Pipeline: AWS Steps
 
-EC2
+Credentials
+- aws-credential
+- ubuntu-user
+
+Add Amazon EC2 to Jenkins clouds
+
+Amazon EC2
 Install aws cli
 curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip"
 unzip awscliv2.zip

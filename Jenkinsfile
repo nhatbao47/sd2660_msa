@@ -15,9 +15,10 @@ pipeline {
             steps {
                 withAWS(region:'us-east-1',credentials:'aws-credential') {
                     sh "aws ecr get-login-password --region ${REGION} | docker login --username AWS --password-stdin ${ECR_URI}"
-                    sh "rm -r -f ${REPO_NAME}"
-                    sh "git clone ${GIT_REPO}"
-                    sh "docker build -t ${FRONTEND_APP} ./${REPO_NAME}/src/frontend/"
+                    // sh "rm -r -f ${REPO_NAME}"
+                    // sh "git clone ${GIT_REPO}"
+                    // sh "docker build -t ${FRONTEND_APP} ./${REPO_NAME}/src/frontend/"
+                    sh "docker build -t ${FRONTEND_APP} src/frontend/"
                     sh "docker tag ${FRONTEND_APP}:latest ${ECR_URI}/${FRONTEND_APP}:${IMAGE_TAG}"
                     sh "docker push ${ECR_URI}/${FRONTEND_APP}:${IMAGE_TAG}"
                 }

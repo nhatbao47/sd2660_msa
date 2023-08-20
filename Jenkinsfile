@@ -7,6 +7,7 @@ pipeline {
         ECR_URI="495016266100.dkr.ecr.us-east-1.amazonaws.com"
         IMAGE_TAG="${BUILD_NUMBER}"
         GIT_REPO = "https://github.com/nhatbao47/sd2660_msa.git"
+        SOURCE_PATH = "./sd2660_msa/src"
     }
     stages {
         stage('Docker Build Frontend') {
@@ -15,7 +16,7 @@ pipeline {
                 withAWS(region:'us-east-1',credentials:'aws-credential') {
                     sh "aws ecr get-login-password --region ${REGION} | docker login --username AWS --password-stdin ${ECR_URI}"
                     sh "git clone ${GIT_REPO}"
-                    sh "docker build -t ${FRONTEND_APP} .sd2660_msa/src/frontend/"
+                    sh "docker build -t ${FRONTEND_APP} ${SOURCE_PATH}/frontend/"
                     sh "docker tag ${FRONTEND_APP}:latest ${ECR_URI}/${FRONTEND_APP}:${IMAGE_TAG}"
                     sh "docker push ${ECR_URI}/${FRONTEND_APP}:${IMAGE_TAG}"
                 }

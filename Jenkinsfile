@@ -28,7 +28,7 @@ pipeline {
             steps {
                 withAWS(region:'us-east-1',credentials:'aws-credential') {
                     sh "aws ecr get-login-password --region ${REGION} | docker login --username AWS --password-stdin ${ECR_URI}"
-                    sh "docker build -t ${BACKEND_APP} ./${REPO_NAME}/src/backedn/"
+                    sh "docker build -t ${BACKEND_APP} ./${REPO_NAME}/src/backend/"
                     sh "docker tag ${BACKEND_APP}:latest ${ECR_URI}/${BACKEND_APP}:${IMAGE_TAG}"
                     sh "docker push ${ECR_URI}/${BACKEND_APP}:${IMAGE_TAG}"
                 }

@@ -13,7 +13,7 @@ pipeline {
             agent any
             steps {
                 withAWS(region:'us-east-1',credentials:'aws-credential') {
-                    sh "aws ecr get-login-password --region ${REGION} | docker login --username AWS --password-stdin ${REPO_URI}"
+                    sh "aws ecr get-login-password --region ${REGION} | docker login --username AWS --password-stdin ${ECR_URI}"
                     sh "git clone ${GIT_REPO}"
                     sh "docker build -t ${FRONTEND_APP} .sd2660_msa/src/frontend/"
                     sh "docker tag ${FRONTEND_APP}:latest ${ECR_URI}/${FRONTEND_APP}:${IMAGE_TAG}"

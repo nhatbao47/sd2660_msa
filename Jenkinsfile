@@ -1,10 +1,10 @@
 pipeline {
     agent none
     environment {
-        REGION = "us-east-1"
+        REGION = "ap-southeast-1"
         FRONTEND_APP = "frontend"
         BACKEND_APP = "backend"
-        ECR_URI = "495016266100.dkr.ecr.us-east-1.amazonaws.com"
+        ECR_URI = "495016266100.dkr.ecr.ap-southeast-1.amazonaws.com"
         IMAGE_TAG = "${BUILD_NUMBER}"
         GIT_REPO = "https://github.com/nhatbao47/sd2660_msa.git"
         REPO_NAME = "sd2660_msa"

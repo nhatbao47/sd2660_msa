@@ -14,7 +14,7 @@ pipeline {
             agent any
             steps {
                 withAWS(region:'us-east-1',credentials:'aws-credential') {
-                    sh "aws ecr get-login-password --region ${REGION} | docker login -u AWS -p \$(aws ecr get-login-password --region ${REGION}) ${ECR_URI}"
+                    sh "aws ecr get-login-password --region ${REGION} | docker login --username AWS --password-stdin ${ECR_URI}"
                     sh "docker build -t ${FRONTEND_APP} src/frontend/"
                     sh "docker tag ${FRONTEND_APP}:latest ${ECR_URI}/${FRONTEND_APP}:${IMAGE_TAG}"
                     sh "docker push ${ECR_URI}/${FRONTEND_APP}:${IMAGE_TAG}"

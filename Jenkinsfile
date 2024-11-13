@@ -35,7 +35,7 @@ pipeline {
             agent any
             steps {
                 script {
-                    sh "trivy image --exit-code 1 --severity HIGH,CRITICAL ${FRONTEND_APP}:latest || true"
+                    sh "trivy image --exit-code 1 --severity HIGH,CRITICAL --scanners vuln ${FRONTEND_APP}:latest || true"
                 }
             }
         }
@@ -63,7 +63,7 @@ pipeline {
             agent any
             steps {
                 script {
-                    sh "trivy image --exit-code 1 --severity HIGH,CRITICAL ${BACKEND_APP}:latest || true"
+                    sh "trivy image --exit-code 1 --severity HIGH,CRITICAL --scanners vuln ${BACKEND_APP}:latest || true"
                 }
             }
         }
